@@ -1,0 +1,671 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+|						TERM PROJECT               Date: 23/12/19 |
+|		Made By:												  |
+|				Riyan Amjad									      | 
+|				Muhammad Aasif Mustafa							  |
+|		Section:												  |
+|				BEE-11-C										  |
+|		Subject:												  |
+|				Fundamentals of Programming						  |
+|		Instructor:												  |
+|				Prof. Taha Ali									  |
+|		Project:												  |
+|				CHATBOT											  |		
+|																  |
+|		Description:											  |
+|			This program is used to give answers to the questions |
+|       asked by the user. These questions are related to a topic |
+|	    or number of topics. The method used in this program is   |
+|       the finding of keywords specified by us. In this program, |
+|       we have restricted the domain of the answers to fundamen- |
+|       tals of C Programming Language.                           |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+#include<stdio.h>
+int main()
+{
+	char q[100];
+	//The Array q[] is used to store the Question
+	char kws[131][10] = {
+		//Following is the List of all Keywords in a Multi-dimentional Array
+		//The following keywords will predict the questions 90% precisely
+		//Each Keyword is associated with a Unique Row Number
+		{ ' ', 'c', ' ', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', 'c', '?', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', 'b', ' ', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', 'b', '?', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'b', 'c', 'p', 'l', '~', '~', '~', '~', '~', '~' },
+		{ 'u', 'n', 'i', 'x', '~', '~', '~', '~', '~', '~' },
+		{ 'a', 'l', 'g', 'o', 'l', '~', '~', '~', '~', '~' },
+		{ 'r', 'i', 't', 'c', 'h', 'i', 'e', '~', '~', '~' },
+		{ 't', 'h', 'o', 'm', 'p', 's', 'o', 'n', '~', '~' },
+		{ 'm', 'a', 'c', 'h', 'i', 'n', 'e', '~', '~', '~' },
+		{ 'n', 'b', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'n', 'e', 'w', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'c', '8', '9', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'c', '9', '0', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'c', '9', '9', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'k', '&', 'r', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'c', '+', '+', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'j', 'a', 'v', 'a', '~', '~', '~', '~', '~', '~' },
+		{ 'c', '#', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'p', 'e', 'r', 'l', '~', '~', '~', '~', '~', '~' },
+		{ 'a', 's', 's', 'e', 'm', 'b', 'l', 'y', '~', '~' },
+		{ 'p', 'r', 'i', 'n', 't', '~', '~', '~', '~', '~' },
+		{ 'p', 'r', 'e', 'p', 'r', 'o', '~', '~', '~', '~' },
+		{ 'c', 'o', 'm', 'p', 'i', 'l', '~', '~', '~', '~' },
+		{ 'l', 'i', 'n', 'k', '~', '~', '~', '~', '~', '~' },
+		{ 'g', 'c', 'c', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'i', 'd', 'e', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'd', 'i', 'r', 'e', 'c', 't', 'i', 'v', '~', '~' },
+		{ 'f', 'u', 'n', 'c', 't', 'i', '~', '~', '~', '~' },
+		{ 's', 't', 'a', 't', 'e', 'm', '~', '~', '~', '~' },
+		{ 'h', 'e', 'a', 'd', 'e', 'r', '~', '~', '~', '~' },
+		{ 'r', 'e', 't', 'u', 'r', 'n', '~', '~', '~', '~' },
+		{ 'm', 'a', 'i', 'n', '~', '~', '~', '~', '~', '~' },
+		{ 'c', 'a', 'l', 'l', '~', '~', '~', '~', '~', '~' },
+		{ 'c', 'o', 'm', 'm', 'e', 'n', 't', '~', '~', '~' },
+		{ 'v', 'a', 'r', 'i', 'a', 'b', '~', '~', '~', '~' },
+		{ 'a', 's', 's', 'i', 'g', 'n', '~', '~', '~', '~' },
+		{ 't', 'y', 'p', 'e', '~', '~', '~', '~', '~', '~' },
+		{ ' ', 'i', 'n', 't', '~', '~', '~', '~', '~', '~' },
+		{ 'f', 'l', 'o', 'a', 't', '~', '~', '~', '~', '~' },
+		{ 'd', 'e', 'c', 'l', 'a', 'r', 'a', '~', '~', '~' },
+		{ '%%', 'd', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'h', 'o', 'l', 'd', '~', '~', '~', '~', '~', '~' },
+		{ '%%', 'f', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'i', 'n', 'i', 't', 'i', 'a', 'l', '~', '~', '~' },
+		{ 's', 'c', 'a', 'n', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '&', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'm', 'a', 'c', 'r', 'o', '~', '~', '~', '~', '~' },
+		{ '#', 'd', 'e', 'f', '~', '~', '~', '~', '~', '~' },
+		{ 'i', 'd', 'e', 'n', 't', 'i', 'f', '~', '~', '~' },
+		{ 'k', 'e', 'y', 'w', 'o', 'r', 'd', '~', '~', '~' },
+		{ 't', 'o', 'k', 'e', 'n', '~', '~', '~', '~', '~' },
+		{ 'i', 'n', 'd', 'e', 'n', 't', 'a', '~', '~', '~' },
+		{ 'c', 'o', 'n', 'v', 'e', 'r', '~', '~', '~', '~' },
+		{ 'w', 'i', 'd', 't', 'h', '~', '~', '~', '~', '~' },
+		{ 'l', 'e', 'f', 't', '~', '~', '~', '~', '~', '~' },
+		{ 'r', 'i', 'g', 'h', 't', '~', '~', '~', '~', '~' },
+		{ '%%', 'e', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ '%%', 'g', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'p', 'r', 'e', 'c', 'i', 's', 'i', 'o', 'n', '~' },
+		{ 'e', 's', 'c', 'a', 'p', 'e', '~', '~', '~', '~' },
+		{ 'l', 'i', 'n', 'u', 'x', '~', '~', '~', '~', '~' },
+		{ ' ', '-', 'o', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '%%', ' ', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '%%', '?', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', 'c', 'c', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'l', 'a', 'y', 'o', 'u', 't', '~', '~', '~', '~' },
+		{ 'a', 'r', 'i', 't', 'h', 'm', 'e', '~', '~', '~' },
+		{ 'u', 'n', 'a', 'r', 'y', '~', '~', '~', '~', '~' },
+		{ 'b', 'i', 'n', 'a', 'r', 'y', '~', '~', '~', '~' },
+		{ ' ', '/', ' ', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '/', '?', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'e', 'c', 'e', 'd', 'e', 'n', 'c', 'e', '~', '~' },
+		{ 'a', 's', 's', 'o', 'c', 'i', 'a', '~', '~', '~' },
+		{ 's', 'i', 'm', 'p', 'l', 'e', '~', '~', '~', '~' },
+		{ 'c', 'o', 'm', 'p', 'o', 'u', 'n', 'd', '~', '~' },
+		{ 's', 'i', 'd', 'e', '~', '~', '~', '~', '~', '~' },
+		{ 'l', 'v', 'a', 'l', 'u', 'e', '~', '~', '~', '~' },
+		{ 'i', 'n', 'c', 'r', 'e', 'm', '~', '~', '~', '~' },
+		{ 'd', 'e', 'c', 'r', 'e', 'm', '~', '~', '~', '~' },
+		{ 'e', 'x', 'p', 'r', 'e', 's', 's', 'i', '~', '~' },
+		{ 's', 't', 'a', 'n', 'd', 'a', 'r', '~', '~', '~' },
+		{ 'p', 'u', 'n', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'a', 'u', 't', 'o', '~', '~', '~', '~', '~', '~' },
+		{ 'o', 'p', 't', 'i', 'o', 'n', '~', '~', '~', '~' },
+		{ '<', 's', 't', 'd', 'i', 'o', '~', '~', '~', '~' },
+		{ ' ', '.', 'h', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '#', ' ', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '#', '?', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '\\', ' ', '~', '~', '~', '~', '~', '~', '~' },
+		{ ' ', '\\', '?', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'p', 'r', 'e', 'c', 'e', 'd', 'e', '~', '~', '~' },
+		{ 'c', 'o', 'n', 'v', 'e', 'n', '~', '~', '~', '~' },
+		{ 'l', 'i', 'b', 'r', 'a', 'r', 'y', '~', '~', '~' },
+		{ 'l', 'i', 'n', 'e', '~', '~', '~', '~', '~', '~' },
+		{ 's', 'p', 'a', 'c', 'e', '~', '~', '~', '~', '~' },
+		{ 's', 't', 'r', 'i', 'n', 'g', '~', '~', '~', '~' },
+		{ 'v', 'a', 'l', 'u', 'e', '~', '~', '~', '~', '~' },
+		{ 'm', 'i', 'X', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'd', 'i', 's', 'p', 'l', 'a', 'y', '~', '~', '~' },
+		{ 'd', 'i', 'g', 'i', 't', '~', '~', '~', '~', '~' },
+		{ 'l', 'i', 'm', 'i', 't', '~', '~', '~', '~', '~' },
+		{ 'c', 'o', 'u', 'n', 't', 'e', 'r', '~', '~', '~' },
+		{ 'b', 'e', 'h', 'a', 'v', '~', '~', '~', '~', '~' },
+		{ 'm', 'a', 'n', 'd', 'a', 't', 'o', 'r', 'y', '~' },
+		{ 's', 'p', 'e', 'c', 'i', 'a', 'l', '~', '~', '~' },
+		{ 'w', 'a', 'r', 'n', '~', '~', '~', '~', '~', '~' },
+		{ 'f', 'o', 'r', 'm', 'a', 't', '~', '~', '~', '~' },
+		{ 'd', 'e', 'c', 'i', 'm', 'a', 'l', '~', '~', '~' },
+		{ 'e', 'x', 'p', 'o', 'n', 'e', 'n', 't', '~', '~' },
+		{ 'o', 'p', 'e', 'r', 'a', 't', 'o', 'r', '~', '~' },
+		{ '+', '+', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ '-', '-', '~', '~', '~', '~', '~', '~', '~', '~' },
+		{ 's', 'u', 'b', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'f', 'i', 'n', 'g', 'e', 'r', '~', '~', '~', '~' },
+		{ 'o', 'r', 'd', 'e', 'r', '~', '~', '~', '~', '~' },
+		{ 'd', 'i', 'f', 'f', 'e', 'r', '~', '~', '~', '~' },
+		{ ' ', 'a', 'n', 'd', ' ', '~', '~', '~', '~', '~' },
+		{ 'b', 'e', 't', 't', 'e', 'r', '~', '~', '~', '~' },
+		{ 'p', 'r', 'o', 'p', 'e', 'r', 't', '~', '~', '~' },
+		{ 's', 't', 'r', 'e', 'n', 'g', 't', 'h', '~', '~' },
+		{ 'a', 'd', 'v', 'a', 'n', 't', '~', '~', '~', '~' },
+		{ 'd', 'r', 'a', 'w', 'b', '~', '~', '~', '~', '~' },
+		{ 'w', 'e', 'a', 'k', 'n', '~', '~', '~', '~', '~' },
+		{ 'd', 'i', 's', 'a', 'd', 'v', 'a', 'n', 't', '~' },
+		{ 'e', 'f', 'f', 'e', 'c', 't', '~', '~', '~', '~' },
+		{ 'f', 'e', 'a', 't', 'u', 'r', 'e', '~', '~', '~' },
+		{ ' ', 'u', 'n', '~', '~', '~', '~', '~', '~', '~' },
+		{ 'f', 'a', 't', 'h', 'e', 'r', '~', '~', '~', '~' },
+		{ 'b', 'a', 's', 'e', '~', '~', '~', '~', '~', '~' },
+		{ 'i', 'n', 'p', 'u', 't', '~', '~', '~', '~', '~' } };
+	int i, j, k, l, rn[8] = { -1, -1, -1, -1, -1, -1, -1, -1 }, m, r = 0, a = 0, n = -1, t = 0;
+	/*
+	The Variables i, j, k, l are used in For Loops
+	The Array rn[] will be Filled with Keywords Present in the Question
+	The Variable 'm' is the Row Number of the Keyword
+	The Variable 'r' is the Number of Characters of Keyword matched with Question
+	The Variable 'a' is the Length of Keyword being Matched
+	The Variable 'n' is used to Store Keywords One-by-One in Order in the Array rn[]
+	The Variable 't' Checks if any Answer is printed or not...if not....It means That the question
+	is out of the scope of this program
+	*/
+	/*
+	Following if the File Handling.....We have Added CHATBOT Header on The Console
+	For this we have used File Handling
+	*/
+	FILE* fp;
+	int err;
+	char data[1000];
+	err = fopen_s(&fp, "C:\\Users\\maasi\\Desktop\\AAA.txt", "r");
+	while (fgets(data, 1000, fp) != 0)
+	{
+		printf("%s", data);
+	}
+	fclose(fp);
+	//The Question being taken from the User Starts From Here
+	printf("\nCHATBOT: This is Your ChatBot!!!\nFeel Free to Ask Question About Introduction to C Language or Press Enter to Terminate Program...\nWhat is Your Question:\n");
+	printf("USER: ");
+	scanf_s("%c", &q[0]);
+	if ((65 <= q[0] && q[0] <= 90) && q[0] != '\n')
+	{
+		q[0] = q[0] + 32;
+	}
+	//The Keywords are now Matched with the Question from First Keyword to last
+	//Which ever matches completely, it is stored in rn[]
+	while (1)
+	{
+		if (q[0] != '\n')
+		{
+			for (i = 0; i < 100 && q[i] != '\n'; i++)
+			{
+				scanf_s("%c", &q[i + 1]);
+				if ((65 <= q[i + 1] && q[i + 1] <= 90) && q[i + 1] != '\n')
+				{
+					q[i + 1] = q[i + 1] + 32;
+				}
+			}
+			for (i++; i < 100; i++)
+			{
+				q[i] = '~';
+			}
+			for (m = 0; m < 131; m++)
+			{
+				for (l = 0; l < i; l++)
+				{
+					for (k = l; (k < (10 + l)) && (kws[m][k - l] != '~'); k++)
+					{
+						if (q[k] == kws[m][k - l])
+						{
+							r++;
+						}
+						a++;
+					}
+					if (r == a)
+					{
+						++n;
+						rn[n] = m;
+					}
+					r = 0;
+					a = 0;
+				}
+			}
+			printf("CHATBOT: ");
+			//This is the Answer Section
+			//If specified Keywords arre present in a Question, then the followed answers are printed
+			if ((rn[0] == 0 && rn[1] == -1) || (rn[0] == 1 && rn[1] == -1) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 0 || rn[0] == 1 || rn[1] == 0 || rn[1] == 1)))
+			{
+				printf("C is a widely used Programming Language developed in the early 1970s at Bell Laboratories. It was developed in 1972 by Dennis Ritchie, Ken Thompson and others. C is a general-purpose programming language that is extremely popular, simple and flexible. It is machine - independent, structured programming language which is used extensively in various applications. By 1971, Ritchie began to develop an extended version of B. He called his language NB (\"New B\") at first. As the language began to diverge more from B, he changed its name to C. The language was stable enough by 1973 that UNIX could be rewritten in C.\n"); t++;
+			}
+			if ((rn[0] == 2 && rn[1] == -1) || (rn[0] == 3 && rn[1] == -1) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 2 || rn[0] == 3 || rn[1] == 2 || rn[1] == 3)))
+			{
+				printf("B is a programming language developed at Bell Labs circa 1969. It is the work of Ken Thompson with Dennis Ritchie. B was derived from BCPL\n"); t++;
+			}
+			if (rn[0] == 4 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 4 || rn[1] == 4)))
+			{
+				printf("BCPL (Basic Combined Programming Language) is a procedural, imperative, and structured computer programming language. Originally intended for writing compilers for other languages, BCPL is no longer in common use. However, its influence is still felt because a stripped down and syntactically changed version of BCPL, called B, was the language on which the C programming language was based.\n"); t++;
+			}
+			if (rn[0] == 5 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 5 || rn[1] == 5)))
+			{
+				printf("UNIX is a family of multitasking, multiuser computer operating systems that derive from the original AT&T Unix, development starting in the 1970s at the Bell Labs research center by Ken Thompson, Dennis Ritchie, and others.\n"); t++;
+			}
+			if (rn[0] == 6 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 6 || rn[1] == 6)))
+			{
+				printf("ALGOL 60 (short for Algorithmic Language 1960) is a member of the ALGOL family of computer programming languages. It followed on from ALGOL 58 which had introduced code blocks and the begin and end pairs for delimiting them. ALGOL 60 was the first language implementing nested function definitions with lexical scope. It gave rise to many other programming languages, including CPL, Simula, BCPL, B, Pascal, and C.\n"); t++;
+			}
+			if (rn[0] == 7 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 7 || rn[1] == 7)))
+			{
+				printf("Dennis MacAlistair Ritchie (September 9, 1941 – c. October 12, 2011) was an American computer scientist.[2] He created the C programming language and, with long-time colleague Ken Thompson, the Unix operating system and B programming language.\n"); t++;
+			}
+			if (rn[0] == 8 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 8 || rn[1] == 8)))
+			{
+				printf("Kenneth Lane Thompson (born February 4, 1943) is an American pioneer of computer science. Thompson worked at Bell Labs for most of his career where he designed and implemented the original Unix operating system. He also invented the B programming language, the direct predecessor to the C programming language, and was one of the creators and early developers of the Plan 9 operating system.\n"); t++;
+			}
+			if (rn[0] == 9 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 9 || rn[1] == 9)))
+			{
+				printf("Set of instructions executed directly by a computer's central processing unit (CPU).\n"); t++;
+			}
+			if (rn[0] == 20 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 20 || rn[1] == 20)))
+			{
+				printf("Low-level programming language in which there is a very strong (generally one-to-one) correspondence between the language and the architecture's machine code instructions. \n"); t++;
+			}
+			if ((rn[1] == 10 || rn[1] == 11) && rn[2] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 10 || rn[0] == 11 || rn[1] == 10 || rn[1] == 11)))
+			{
+				printf("Also known as B, is a programming language developed at Bell Labs circa 1969. It is the work of Ken Thompson with Dennis Ritchie. B was derived from BCPL, and its name may be a contraction of BCPL.\n"); t++;
+			}
+			if (rn[0] == 12 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 12 || rn[1] == 12)))
+			{
+				printf("In 1983, the American National Standards Institute formed a committee, X3J11, to establish a standard specification of C. The standard was completed in 1989 and ratified as ANSI X3.159-1989 \"Programming Language C.\" This version of the language is often referred to as \"ANSI C\". Later on sometimes the label \"C89\" is used to distinguish it from C99 but using the same labelling method.\n"); t++;
+			}
+			if (rn[0] == 13 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 13 || rn[1] == 13)))
+			{
+				printf("The same standard as C89 was ratified by the International Organization for Standardization as ISO/IEC 9899:1990, with only formatting changes,[2] which is sometimes referred to as C90. Therefore, the terms \"C89\" and \"C90\" refer to essentially the same language. This standard has been withdrawn by both ANSI / INCITS[3] and ISO / IEC.\n"); t++;
+			}
+			if (rn[0] == 14 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 14 || rn[1] == 14)))
+			{
+				printf("C99 (previously known as C9X) is an informal name for ISO/IEC 9899:1999, a past version of the C programming language standard.[1] It extends the previous version (C90) with new features for the language and the standard library, and helps implementations make better use of available computer hardware, such as IEEE 754-1985 floating-point arithmetic, and compiler technology.[2] The C11 version of the C programming language standard, published in 2011, replaces C99.\n"); t++;
+			}
+			if (rn[0] == 15 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 15 || rn[1] == 15)))
+			{
+				printf("In 1978, Brian Kernighan and Dennis Ritchie published the first edition of The C Programming Language.[1] This book, known to C programmers as K&R, served for many years as an informal specification of the language. The version of C that it describes is commonly referred to as \"K&R C\".\n"); t++;
+			}
+			if (rn[0] == 16 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 16 || rn[1] == 16)))
+			{
+				printf("C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or \"C with Classes\". The language has expanded significantly over time, and modern C++ has object-oriented, generic, and functional features in addition to facilities for low-level memory manipulation.\n"); t++;
+			}
+			if (rn[0] == 17 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 17 || rn[1] == 17)))
+			{
+				printf("Java is a general-purpose programming language that is class-based, object-oriented, and designed to have as few implementation dependencies as possible. It is intended to let application developers write once, run anywhere (WORA),[15] meaning that compiled Java code can run on all platforms that support Java without the need for recompilation.\n"); t++;
+			}
+			if (rn[0] == 18 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 18 || rn[1] == 18)))
+			{
+				printf("C# is a general-purpose, multi-paradigm programming language encompassing strong typing, lexically scoped, imperative, declarative, functional, generic, object-oriented (class-based), and component-oriented programming disciplines.\n"); t++;
+			}
+			if (rn[0] == 19 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 19 || rn[1] == 19)))
+			{
+				printf("Perl is a family of two high-level, general-purpose, interpreted, dynamic programming languages. \"Perl\" refers to Perl 5, but from 2000 to 2019 it also referred to its redesigned \"sister language\", Perl 6, before the latter's name was officially changed to Raku in October 2019. Though Perl is not officially an acronym, there are various backronyms in use, including \"Practical Extraction and Reporting Language\". Perl was originally developed by Larry Wall in 1987 as a general - purpose Unix scripting language to make report processing easier.\n"); t++;
+			}
+			if ((rn[0] == 21 && rn[1] == -1) || (rn[0] == 21 && rn[2] == -1) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 21 || rn[1] == 21)))
+			{
+				printf("printf format string refers to a control parameter used by a class of functions in the input/output libraries of C and many other programming languages. The string is written in a simple template language: characters are usually copied literally into the function's output, but format specifiers, which start with a %% character, indicate the location and method to translate a piece of data (such as a number) to characters. The way to print a string is:\nprintf(\"string\");\nThere is no limit to number of variables printed by printf.\n"); t++;
+			}
+			if (rn[0] == 22 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 22 || rn[1] == 22)))
+			{
+				printf("During Pre processing, preprocessor obeys commands that begin with # (known as directives).\n"); t++;
+			}
+			if (rn[0] == 23 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 23 || rn[1] == 23)))
+			{
+				printf("During Compiling, a Compiler translates a program into machine Instructions.\n"); t++;
+			}
+			if (rn[0] == 24 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 24 || rn[1] == 24)))
+			{
+				printf("During Linking, a linker combines the object code produced by the compiler with any additional code needed to yield a complete executable program.\n"); t++;
+			}
+			if ((rn[0] == 25 && rn[1] == -1) || (rn[1] == 25 && rn[2] == -1) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 25 || rn[1] == 25)))
+			{
+				printf("GCC is one of the most popular C compilers. GCC is supplied with Linux but is available for many other platforms as well. Using this compiler is similar to using cc: %% gcc - o pun pun.c\n"); t++;
+			}
+			if (rn[0] == 26 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 26 || rn[1] == 26)))
+			{
+				printf("An integrated development environment (IDE) is a software package that makes it possible to edit, compile, link, execute, and debug a program without leaving the environment.\n"); t++;
+			}
+			if (rn[0] == 27 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 27 || rn[1] == 27)))
+			{
+				printf("Before a C program is compiled, it is first edited by a preprocessor. Commands intended for the preprocessor are called directives. Example: #include <stdio.h>.Directives always begin with a # character. By default, directives are one line long; there’s no semicolon or other special marker at the end.\n"); t++;
+			}
+			if (rn[0] == 28 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 28 || rn[1] == 28)))
+			{
+				printf("A function is a series of statements that have been grouped together and given a name. Some functions compute a value, others undertake a task. Library functions are provided as part of the C implementation. A function that computes a value uses a return statement to specify what value it \"returns\".\n"); t++;
+			}
+			if (rn[0] == 29 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 29 || rn[1] == 29)))
+			{
+				printf("A statement is a command to be executed when the program runs.\n"); t++;
+			}
+			if (rn[0] == 30 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 30 || rn[1] == 30)))
+			{
+				printf("Header file is a file that contains function declaration and macro definition for C in-built library functions. ... When we include header files in our C program using “#include <filename. h>” command, all C code of the header files are included in C program. Then, this C program is compiled by compiler and executed.\n"); t++;
+			}
+			if (rn[0] == 31 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 31 || rn[1] == 31)))
+			{
+				printf("The return statement terminates the execution of a function and returns control to the calling function. Execution resumes in the calling function at the point immediately following the call. A return statement can also return a value to the calling function.\n"); t++;
+			}
+			if ((rn[0] == 32 && rn[1] == -1) || ((rn[1] == 32 || rn[0] == 32) && (rn[2] == -1 || rn[3] == -1)) || (rn[0] == 28 && (rn[1] == 104 || rn[1] == 105)) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 32 || rn[1] == 32)))
+			{
+				printf("The main function is mandatory. Main is special : it gets called automatically when the program is executed. main returns a status code; the value 0 indicates normal program termination. If there’s no return statement at the end of the main function, many compilers will produce a warning message.\n"); t++;
+			}
+			if (rn[0] == 33 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 33 || rn[1] == 33)))
+			{
+				printf("Asking a function to perform its assigned task is known as calling the function.\n"); t++;
+			}
+			if (rn[0] == 34 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 34 || rn[1] == 34)))
+			{
+				printf("A comment begins with /* and end with */. /* This is a comment */. Comments may appear almost anywhere in a program, either on separate lines or on the same lines as other program text. SIngle Line comments can be start with ////. This style of comment ends automatically at the end of a line.\n"); t++;
+			}
+			if (rn[0] == 35 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 35 || rn[1] == 35)))
+			{
+				printf("Most programs need to a way to store data temporarily during program execution. These storage locations are called variables.\n"); t++;
+			}
+			if (rn[0] == 36 || rn[1] == 36 || rn[1] == 97 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 36 || rn[1] == 36)))
+			{
+				printf("A variable can be given a value by means of assignment. Before a variable can be assigned a value or used in any other way it must first be declared. The way to give a value to a variable is as follow:\ni=2;\nIf the value is given to a float, it is better to write .0f at the end of number. A float usually stores large numbers. To store or retrieve a number from variable, %%d is used with int and %%f is used with float.\n"); t++;
+			}
+			if (rn[0] == 37 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 37 || rn[1] == 37)))
+			{
+				printf("Every variable must have a type. C has a wide variety of types, including int and float.\n"); t++;
+			}
+			if (rn[0] == 38 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 38 || rn[1] == 38)))
+			{
+				printf("A variable of type int (short for integer) can store a whole number such as 0, 1, 392, or –2553. The largest int value is typically 2, 147, 483, 647 but can be as small as 32, 767.\n"); t++;
+			}
+			if (rn[0] == 39 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 39 || rn[1] == 39)))
+			{
+				printf("A variable of type float (short for floating-point) can store much larger numbers than an int variable. Also, a float variable can store numbers with digits after the decimal point, like 379.125.\n"); t++;
+			}
+			if (rn[0] == 40 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 40 || rn[1] == 40)))
+			{
+				printf("Variables must be declared before they are used. Variables can be declared one at a time.\n"); t++;
+			}
+			if (rn[0] == 41 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 41 || rn[1] == 41)))
+			{
+				printf("%%d is a placeholder indicating where the value of a variable is to be filled in. %%d works only for int variables.\n"); t++;
+			}
+			if (rn[0] == 42 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 42 || rn[1] == 42)))
+			{
+				printf("A Place Holder \"holds the place\" for the actual number. It is used in printf and scanf functions.\n"); t++;
+			}
+			if ((rn[0] == 43 && rn[1] == -1) || (rn[0] == 108 || rn[1] == 108 || rn[2] == 108) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 43 || rn[1] == 43)))
+			{
+				printf("%%f is a placeholder indicating where the value of a variable is to be filled in. %%f works for allnumbers including the decimal point. Hence the decimal numbers are stored in %%f.\n"); t++;
+			}
+			if (rn[0] == 44 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 44 || rn[1] == 44)))
+			{
+				printf("The initial value of a variable may be included in its declaration. The value of the variable is said to be an initializer. Any number of variables can be initialized in the same declaration. Each variable requires its own initializer.\n"); t++;
+			}
+			if ((rn[0] == 45 && rn[1] == -1) || (rn[1] == 45 && rn[2] == -1) || (rn[0] == 21 && rn[1] == 102) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 45 || rn[1] == 45)))
+			{
+				printf("scanf is the C library counterpart to printf. scanf requires a format string to specify the appearance of the input data. Example of using scanf to read an int value : scanf(\"%%d\", &i);. The & symbol is usually(but not always) required when using scanf.When using scanf, the programmer must check that the number of conversion specifications matches the number of input variables and that each conversion is appropriate for the corresponding variable. Another trap involves the & symbol, which normally precedes each variable in a scanf call. The & is usually(but not always) required, and it’s the programmer’s responsibility to remember to use it. scanf tries to match groups of input characters with conversion specifications in the format string. For each conversion specification, scanf tries to locate an item of the appropriate type in the input data, skipping blank space if necessary. scanf then reads the item, stopping when it reaches a character that can’t belong to the item. If the item was read successfully, scanf continues processing the rest of the format string. If not, scanf returns immediately. Putting a new-line character at the end of a scanf format string is usually a bad idea. To scanf, a new - line character in a format string is equivalent to a space; both cause scanf to advance to the next non - white - space character.\n"); t++;
+			}
+			if (rn[0] == 46 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 46 || rn[1] == 46)))
+			{
+				printf("This sign is used in C in following ways:\n(a) Logical-and: if ( ( a>1 ) && (b<0) )\n(b) Address - of operator:   p = &x;   Read: Assign to p(a pointer) the address of x.\n"); t++;
+			}
+			if (rn[0] == 47 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 47 || rn[1] == 47)))
+			{
+				printf("A macro is a fragment of code which has been given a name. Whenever the name is used, it is replaced by the contents of the macro. Object-like macros resemble data objects when used, function-like macros resemble function calls. You may define any valid identifier as a macro, even if it is a C keyword. It begins with a # character. the name of a macro definiiois always written in capital letters and may contain underscore. It does not contain any spaces but contains underscores instead of spaces.\n"); t++;
+			}
+			if (rn[0] == 48 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 48 || rn[1] == 48)))
+			{
+				printf("#define is a C preprocessor directive used to define macros. The preprocessor directives are used to provide general instruction or required data which is used inside a program. A macro is a block of code which has been given a name.\n"); t++;
+			}
+			if (rn[1] == 49 && rn[2] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 49 || rn[1] == 49)))
+			{
+				printf("Names for variables, functions, macros, and other entities are called identifiers. An identifier may contain letters, digits, and underscores, but must begin with a letter or underscore. C places no limit on the maximum length of an identifier.\n"); t++;
+			}
+			if (rn[0] == 50 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 50 || rn[1] == 50)))
+			{
+				printf("Keywords are the words that cannot be used as Identifiers. Keywords (with the exception of _Bool, _Complex, and _Imaginary) must be written using only lower-case letters. Following is the list of keywords:\nauto\tenum\trestrict*\tunsigned\nbreak\textern\treturn\tvoid\ncase\tfloat\tshort\tvolatile\nchar\tfor\tsigned\twhile\nconst\tgoto\tsizeof\t_Bool*\ncontinue\tif\tstatic\t_Complex*\ndefault\tinline*\tstruct\t_Imaginary*\ndo\tint\tswitch\tdouble\nlong\ttypedef\telse\tregister\tunion\n"); t++;
+			}
+			if (rn[0] == 51 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 51 || rn[1] == 51)))
+			{
+				printf("A C program is a series of tokens. Group of characters that cannot be split up without changing their meaning. Tokens include :\nIdentifiers\nKeywords\nOperators\nPunctuation\nConstants\nString literals.\n"); t++;
+			}
+			if (rn[0] == 52 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 52 || rn[1] == 52)))
+			{
+				printf("In computer programming, an indentation style is a convention governing the indentation of blocks of code to convey program structure. ... In such languages, indentation is meaningful to the compiler or interpreter; it is more than only a clarity or style issue.\n"); t++;
+			}
+			if (rn[0] == 53 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 53 || rn[1] == 53)))
+			{
+				printf("A conversion specification is a placeholder representing a value to be filled in during printing. They begin with the %% character.\n"); t++;
+			}
+			if (rn[0] == 54 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 54 || rn[1] == 54)))
+			{
+				printf("The minimum field width, m, specifies the minimum number of characters to print. If the value to be printed requires fewer than m characters, it is either right justified or left justified.\n"); t++;
+			}
+			if (rn[0] == 55 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 55 || rn[1] == 55)))
+			{
+				printf("In Left justification, if the value to be printed requires fewer than m characters, where m is minimum field width, the number is displayed with spaces to the left equal to the remaining width. %%-4d displays 123 as 123(space).\n"); t++;
+			}
+			if (rn[0] == 56 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 56 || rn[1] == 56)))
+			{
+				printf("In Right justification, if the value to be printed requires fewer than m characters, where m is minimum field width, the number is displayed with spaces to the right equal to the remaining width. %%4d displays 123 as (space)123.\n"); t++;
+			}
+			if ((rn[0] == 57 && rn[1] == -1) || (rn[0] == 109 || rn[1] == 109 || rn[2] == 109) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 57 || rn[1] == 57)))
+			{
+				printf("“%%e” is for floating type number, a series of decimal digits, optionally containing a decimal point, optionally preceeded by a sign (+ or -) and optionally followed by the e or E character and a decimal integer.\n"); t++;
+			}
+			if (rn[0] == 58 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 58 || rn[1] == 58)))
+			{
+				printf("%%g is example of floating point input/output. %%g is simplifiers of the scientific notation float %%e. %%g will take a number that could be represented as %%f (a simple float or double) or %%e (scientific notation) and return it as the shorter of the two.\n"); t++;
+			}
+			if (rn[0] == 59 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 59 || rn[1] == 59)))
+			{
+				printf("Precision means up to how many places you want your decimal number after the decimal.\n"); t++;
+			}
+			if (rn[0] == 60 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 60 || rn[1] == 60)))
+			{
+				printf("Escape sequences enable strings to contain nonprinting (control) characters and characters that have a special meaning. Following is the list of Escape Sequences,\n\\a Alert (Beep, Bell)\n\\b Backspace\n\\e Escape character\n\\f Formfeed Page Break\n\\n Newline\n\\r Carriage Return\n\\t Horizontal Tab\n\\v Vertical Tab\n\\  Backslash\n\\' Apostrophe or single quotation mark\n\\\" Double quotation mark\n"); t++;
+			}
+			if (rn[0] == 61 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 61 || rn[1] == 61)))
+			{
+				printf("Linux is a family of open source Unix-like operating systems based on the Linux kernel, an operating system kernel first released on September 17, 1991, by Linus Torvalds. Linux is typically packaged in a Linux distribution.\n"); t++;
+			}
+			if (rn[0] == 62 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 62 || rn[1] == 62)))
+			{
+				printf("After compiling and linking the program, cc leaves the executable program in a file named a.out by default. The -o option lets us choose the name of the file containing the executable program.\n"); t++;
+			}
+			if ((rn[0] == 63 && rn[1] == -1) || (rn[0] == 64 && rn[1] == -1) || (rn[1] == 99 || rn[2] == 99))
+			{
+				printf("The %% character is the UNIX prompt. It is also used as Place Holder and as a Remainder Operator that gives the remainder after division. When used as a Place Holder, it is also used to display the current value of a variable.\n"); t++;
+			}
+			if (rn[0] == 65 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 65 || rn[1] == 65)))
+			{
+				printf("To compile a program, cc is written along with the file name in a terminal or command-line window.\n"); t++;
+			}
+			if (rn[0] == 66 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 66 || rn[1] == 66)))
+			{
+				printf("A C program is a series of tokens. The Layout of C Program is as follow:\nTokens include :\nIdentifiers\nKeywords\nOperators\nPunctuation\nConstants\nString literals\n"); t++;
+			}
+			if (rn[0] == 67 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 67 || rn[1] == 67)))
+			{
+				printf("Arithmetic operators take numerical values (either literals or variables) as their operands and return a single numerical value. The standard arithmetic operators are addition (+), subtraction (-), multiplication (*), and division (/).\n"); t++;
+			}
+			if (rn[0] == 68 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 68 || rn[1] == 68)))
+			{
+				printf("A unary operator is one that takes a single operand/argument and performs an operation. A unary operation is an operation with only one operand. This operand comes either before or after the operator.\n"); t++;
+			}
+			if (rn[0] == 69 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 69 || rn[1] == 69)))
+			{
+				printf("Binary operators are those operators that work with two operands. For example, a common binary expression would be a + b—the addition operator (+) surrounded by two operands. The binary operators are further subdivided into arithmetic, relational, logical, and assignment operators.\n"); t++;
+			}
+			if ((rn[0] == 70 && rn[1] == -1) || (rn[0] == 71 && rn[1] == -1) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 70 || rn[1] == 70)) || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 71 || rn[1] == 71)))
+			{
+				printf("/ is the Division Operator. When both operands are integers, / “truncates” the result. The value of 1 / 2 is 0, not 0.5. The %% operator requires integer operands; if either operand is not an integer, the program won’t compile. Using zero as the right operand of either / or %% causes undefined behavior. The behavior when / and %% are used with negative operands is implementation - defined in C89.\n"); t++;
+			}
+			if (rn[0] == 72 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 72 || rn[1] == 72)))
+			{
+				printf("Brackets have High Precedence in C. After Brackets comes the operators with DMAS Rule.\n"); t++;
+			}
+			if (rn[0] == 73 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 73 || rn[1] == 73)))
+			{
+				printf("Associativity comes into play when an expression contains two or more operators with equal precedence. An operator is said to be left associative if it groups from left to right. The binary arithmetic operators(=, *, / , %%, +, and - ) are all left associative.  An operator is right associative if it groups from right to left. The unary arithmetic operators(+ and - ) are both right associative.\n"); t++;
+			}
+			if (rn[0] == 55 && rn[1] == 73)
+			{
+				printf("An operator is said to be left associative if it groups from left to right. The binary arithmetic operators(=, *, / , %%, +, and - ) are all left associative.\n"); t++;
+			}
+			if (rn[0] == 56 && rn[1] == 73)
+			{
+				printf("An operator is right associative if it groups from right to left. The unary arithmetic operators(+and - ) are both right associative.\n"); t++;
+			}
+			if (rn[0] == 36 && rn[1] == 74)
+			{
+				printf("Simple assignment: used for storing a value into a variable.\n"); t++;
+			}
+			if (rn[0] == 36 && rn[1] == 75)
+			{
+				printf("Compound assignment: used for updating a value already stored in a variable. When using the compound assignment operators, be careful not to switch the two characters that make up the operator. Although i = +j will compile, it is equivalent to i = (+j), which merely copies the value of j into i.\n"); t++;
+			}
+			if (rn[0] == 77 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 77 || rn[1] == 77)))
+			{
+				printf("An lvalue represents an object stored in computer memory, not a constant or the result of a computation. Variables are lvalues; expressions such as 10 or 2 * i are not. Since the assignment operator requires an lvalue as its left operand, it’s illegal to put any other kind of expression on the left side of an assignment expression.\n"); t++;
+			}
+			if (rn[0] == 78 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 78 || rn[1] == 78)))
+			{
+				printf("The ++ operator adds 1 to its operand. This is known as increment. It can be used as prefix operators(++i) or postfix operators(i++). It has side effects : it modify the values of its operands.\n"); t++;
+			}
+			if (rn[0] == 79 && rn[1] == -1 || ((rn[2] == 116 || rn[2] == 117) && (rn[0] == 79 || rn[1] == 79)))
+			{
+				printf("The -- operator adds 1 to its operand. This is known as decrement. It can be used as prefix operators(--i) or postfix operators(i--). It has side effects : it modify the values of its operands.\n"); t++;
+			}
+			if (rn[0] == 29 && rn[1] == 80)
+			{
+				printf("C has the unusual rule that any expression can be used as a statement. Example:\n++i;\ni is first incremented, then the new value of i is fetched but then discarded. Some compilers can detect meaningless expression statements; you’ll get a warning such as \"statement with no effect.\"\n"); t++;
+			}
+			if (rn[0] == 81 || rn[1] == 81)
+			{
+				printf("K&R C\n\nDescribed in Kernighan and Ritchie, The C Programming Language(1978)\nDe facto standard\nC89 / C90\nANSI standard X3.159 - 1989 (completed in 1988; formally approved in December 1989)\nInternational standard ISO / IEC 9899:1990\nC99\nInternational standard ISO / IEC 9899 : 1999\nIncorporates changes from Amendment 1 (1995)\n"); t++;
+			}
+			if (rn[0] == 82 && rn[1] == -1)
+			{
+				printf("A joke exploiting the different possible meanings of a word or the fact that there are words which sound alike but have different meanings. e.g. To Cor not to C.\n"); t++;
+			}
+			if (rn[0] == 24 && rn[1] == 83)
+			{
+				printf("Linking is automatic when using cc; no separate link command is necessary.\n"); t++;
+			}
+			if (rn[0] == 84 && rn[1] == -1)
+			{
+				printf("After compiling and linking the program, cc leaves the executable program in a file named a.out by default. The - o option lets us choose the name of the file containing the executable program.\n"); t++;
+			}
+			if (rn[0] == 85 || rn[1] == 85)
+			{
+				printf("#include <stdio.h>\n<stdio.h> is a header containing information about C’s standard I / O library.\n"); t++;
+			}
+			if (rn[0] == 86 || rn[1] == 86)
+			{
+				printf("Header file is a file that contains function declaration and macro definition for C in-built library functions. When we include header files in our C program using “#include <filename. h>” command, all C code of the header files are included in C program. Then, this C program is compiled by compiler and executed.\n"); t++;
+			}
+			if (rn[0] == 87 || rn[0] == 88 || rn[1] == 87)
+			{
+				printf("In C, # is used with directives. Directives begin with a # character.\n"); t++;
+			}
+			if (rn[0] == 89 || rn[0] == 90 || rn[1] == 89)
+			{
+				printf("'\\' is used with escape sequences. Escape sequences enable strings to contain nonprinting (control) characters and characters that have a special meaning. Following is the list of Escape Sequences,\n\\a Alert (Beep, Bell)\n\\b Backspace\n\\e Escape character\n\\f Formfeed Page Break\n\\n Newline\n\\r Carriage Return\n\\t Horizontal Tab\n\\v Vertical Tab\n\\  Backslash\n\\' Apostrophe or single quotation mark\n\\\" Double quotation mark.\n"); t++;
+			}
+			if ((rn[0] == 32 && rn[1] == 106) || (rn[0] == 29 && rn[1] == 31))
+			{
+				printf("If there’s no return statement at the end of the main function, many compilers will produce a warning message.\n"); t++;
+			}
+			if (rn[0] == 37 && rn[1] == 98)
+			{
+				printf("An int variable is normally assigned a value of type int, and a float variable is normally assigned a value of type float. Mixing types(such as assigning an int value to a float variable or assigning a float value to an int variable) is possible but not always safe.\n"); t++;
+			}
+			if (rn[0] == 36 && rn[1] == 56)
+			{
+				printf("The right side of an assignment can be a formula (or expression, in C terminology) involving constants, variables, and operators.\n"); t++;
+			}
+			if (rn[1] == 100 || rn[1] == 100 || rn[2] == 100)
+			{
+				printf("To display p digits after Decimal point in %%f, we use %%.pf with the name of the variable.\n"); t++;
+			}
+			if (rn[0] == 28 && rn[1] == 93)
+			{
+				printf("Library functions in C language are inbuilt functions which are grouped together and placed in a common place called library. They are written in small case. Library functions include standard input/output (stdio.h), string manipulation (string.h), math functions (math.h), and date and time functions (time.h).\n"); t++;
+			}
+			if (rn[0] == 94 || rn[1] == 95 || rn[1] == 94)
+			{
+				printf("The amount of space between tokens usually is not critical. At one extreme, tokens can be crammed together with no space between them, except where this would cause two tokens to merge.\nThe whole program cannot be put on one line, because each preprocessing directive requires a separate line. Compressing programs in this fashion is not a good idea.\nIn fact, adding spaces and blank lines to a program can make it easier to read and understand.\nC allows any amount of space—blanks, tabs, and new - line characters—between tokens. Although extra spaces can be added between tokens, it is not possible to add space within a token without changing the meaning of the program or causing an error.\nPutting a space inside a string literal is allowed, although it changes the meaning of the string.\nPutting a new - line character in a string(splitting the string over two lines) is illegal.\n"); t++;
+			}
+			if (rn[0] == 96 && rn[1] == 107)
+			{
+				printf("The printf function must be supplied with a format string, followed by any values that are to be inserted into the string during printing:\nprintf(string, expr1, expr2, …);\nThe format string may contain both ordinary characters and conversion specifications, which begin with the %% character.\n"); t++;
+			}
+			if (rn[0] == 110 && rn[1] == -1)
+			{
+				printf("C emphasizes expressions rather than statements. Expressions are built from variables, constants, and operators. C has a rich collection of operators, including\narithmetic operators\nrelational operators\nlogical operators\nassignment operators\nincrement and decrement operators\nand many others\n"); t++;
+			}
+			if ((rn[0] == 113 || rn[1] == 113) || (rn[0] == 80 && rn[0] == 97 && rn[2] == 115))
+			{
+				printf("The value of an expression may depend on the order in which its subexpressions are evaluated.\nC doesn’t define the order in which subexpressions are evaluated (with the exception of subexpressions involving the logical and, logical or, conditional, and comma operators) .\nIn the expression (a + b) * (c - d) we don’t know whether (a + b) will be evaluated before (c - d).\n"); t++;
+			}
+			if (rn[1] == 128)
+			{
+				printf("Dennis Ritchie is teh FATHER of C Programming Language.\n"); t++;
+			}
+			if (rn[1] == 120 || rn[1] == 121)
+			{
+				printf("Efficiency\nPortability\nPower\nFlexibility\nStandard library\nIntegration with UNIX\n"); t++;
+			}
+			if (rn[1] == 122 || rn[1] == 123 || rn[1] == 124)
+			{
+				printf("Programs can be difficult to understand\nPrograms can be error - prone.\nPrograms can be difficult to modify.\n"); t++;
+			}
+			if (rn[1] == 125)
+			{
+				printf("Learn how to avoid pitfalls.\nUse software tools(lint, debuggers) to make programs more reliable.\nTake advantage of existing code libraries.\nAdopt a sensible set of coding conventions.\nAvoid “tricks” and overly complex code.\nStick to the standard.\n"); t++;
+			}
+			if (rn[1] == 119)
+			{
+				printf("Low-level\nSmall\nPermissive\n"); t++;
+			}
+			if (rn[0] == 1 && rn[1] == 129)
+			{
+				printf("C++ includes all the features of C, but adds classes and other features to support object-oriented programming.\nJava is based on C++ and therefore inherits many C features.\nC# is a more recent language derived from C++ and Java.\nPerl has adopted many of the features of C.\n"); t++;
+			}
+			if (rn[0] == 130 || rn[1] == 130 || rn[2] == 130 || rn[3] == 130)
+			{
+				printf("A Program can take value of a variable as input from the user by using scanf function.\n"); t++;
+			}
+			//If No Answer is printed, then the Value of 't' is not incremented
+			//The Following string is then printed
+			if (t == 0)
+			{
+				printf("Either this question is out of my Scope or Maybe you have asked me about three things Simultaneously...\nSorry for that.\n");
+			}
+			//Variables are set to Zero for another Question
+			t = 0;
+			n = -1;
+			//The Keywords are cleared from rn[]
+			for (i = 0; i < 8; i++)
+			{
+				rn[i] = -1;
+			}
+			//For Another Question, The following is printed
+			printf("\nCHATBOT: Ask Any Other Question or Press Enter to Terminate Program.\nUSER: ");
+			scanf_s("%c", &q[0]);
+		}
+		else
+			//If Enter is pressed, the Program Termiates
+			return 0;
+	}
+	system("pause");
+	return 0;
+	/*
+	THANK YOU!!!
+	:) GOODBYE
+	*/
+}
